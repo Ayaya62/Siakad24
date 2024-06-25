@@ -60,9 +60,10 @@
                 </div>
                 <input
                   type="text"
+                  v-model="searchQuery"
                   id="simple-search"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                  placeholder="Search"
+                  placeholder="Search NIDN or Name"
                 />
               </div>
             </form>
@@ -71,10 +72,10 @@
             class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
           >
             <div class="flex items-center space-x-3 w-full md:w-auto">
-              <select name="" id="" class="rounded-lg">
+              <select v-model="searchStatus" class="rounded-lg">
                 <option value="" selected disabled>Status</option>
-                <option value="semester">Tetap</option>
-                <option value="semester">Tidak Tetap</option>
+                <option value="tetap">Tetap</option>
+                <option value="tidak tetap">Tidak Tetap</option>
               </select>
             </div>
           </div>
@@ -97,16 +98,26 @@
                 <th scope="col" class="px-4 py-3">Status</th>
               </tr>
             </thead>
+<<<<<<< HEAD
             <tbody class="align-center">
               <tr class="border-b dark:border-gray-700">
+=======
+            <tbody>
+              <tr
+                class="border-b dark:border-gray-700"
+                v-for="(dosen, index) in filteredDosenList"
+                :key="dosen.id"
+              >
+>>>>>>> b33ce1cb5d42514762cd7f288a743a44c1627509
                 <th
                   scope="row"
                   class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  1.
+                  {{ index + 1 }}.
                 </th>
                 <td class="px-4 py-3">
                   <img
+<<<<<<< HEAD
                     src="../../assets/profilePict.png"
                     alt=""
                     width="50"
@@ -124,6 +135,28 @@
                 <td class="px-4 py-3">Wanita</td>
                 <td class="px-4 py-3">S3</td>
                 <td class="px-4 py-3">Tetap</td>
+=======
+                    :src="getFotoUrl(dosen.foto)"
+                    alt="Dosen Foto"
+                    class="w-20 h-20 object-cover"
+                  />
+                </td>
+                <td class="px-4 py-3">
+                  <router-link :to="{ name: 'DetailPageDosen', params: { id: dosen.id } }">
+                    {{ dosen.nama }}
+                  </router-link>
+                </td>
+                <td class="px-4 py-3">{{ dosen.nidn }}</td>
+                <td class="px-4 py-3">{{ dosen.jenis_kelamin }}</td>
+                <td class="px-4 py-3">
+                  {{
+                    dosen.pendidikan_dosen.map((p) => p.sarjana.nama).join(", ")
+                  }}
+                </td>
+                <td class="px-4 py-3">
+                  {{ dosen.jabatan_dosen.status_pekerjaan }}
+                </td>
+>>>>>>> b33ce1cb5d42514762cd7f288a743a44c1627509
               </tr>
             </tbody>
           </table>
@@ -133,4 +166,58 @@
   </section>
 </template>
 
+<<<<<<< HEAD
 <script></script>
+=======
+<script setup>
+import { ref, computed, onMounted } from "vue";
+import axios from "axios";
+
+const dosenList = ref([]);
+const searchQuery = ref("");
+const searchStatus = ref("");
+
+const fetchData = async () => {
+  try {
+    const authToken = localStorage.getItem("authToken");
+    if (!authToken) {
+      console.error("No authentication token found");
+      return;
+    }
+
+    const response = await axios.get("http://127.0.0.1:8000/api/data-dosen", {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        Accept: "application/json",
+      },
+    });
+    dosenList.value = response.data;
+  } catch (error) {
+    console.error(
+      "Error fetching data:",
+      error.response ? error.response.data : error.message
+    );
+  }
+};
+
+const getFotoUrl = (foto) => {
+  const baseUrl = 'http://127.0.0.1:8000/storage/fotos/';
+  return `${baseUrl}${foto}`;
+};
+
+const filteredDosenList = computed(() => {
+  return dosenList.value.filter((dosen) => {
+    const matchesQuery =
+      dosen.nidn.includes(searchQuery.value) ||
+      dosen.nama.toLowerCase().includes(searchQuery.value.toLowerCase());
+    const matchesStatus = searchStatus.value
+      ? dosen.jabatan_dosen.status_pekerjaan.toLowerCase() ===
+        searchStatus.value.toLowerCase()
+      : true;
+    return matchesQuery && matchesStatus;
+  });
+});
+
+onMounted(fetchData);
+</script>
+>>>>>>> b33ce1cb5d42514762cd7f288a743a44c1627509
