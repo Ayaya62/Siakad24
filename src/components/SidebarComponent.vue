@@ -90,7 +90,7 @@
         <li>
           <router-link
             :to="{ name: 'DataMataKuliah' }"
-            class="flex items-center justify-between p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-yellow-300 hover:text-blue-950 group group"
+            class="flex items-center justify-between p-2 text-base font-normal text-white rounded-lg dark:text-white hover:bg-yellow-300 hover:text-blue-950 group"
           >
             <div class="flex items-center">
               <img src="../assets/Book.svg" class="mr-3 h-8" alt="" />

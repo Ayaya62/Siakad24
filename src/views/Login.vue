@@ -84,7 +84,7 @@ const handleLogin = async () => {
     // Arahkan ke halaman yang sesuai berdasarkan peran pengguna
     const user = response.data.user;
     if (user.role === 'admin') {
-      router.push({ name: 'Dashboard' });
+      router.push({ name: 'DataDosen' });
     } else if (user.role === 'dosen') {
       router.push({ name: 'User' });
     } else if (user.role === 'mahasiswa') {
