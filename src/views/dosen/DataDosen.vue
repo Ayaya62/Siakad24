@@ -98,12 +98,17 @@
                 <th scope="col" class="px-4 py-3">Status</th>
               </tr>
             </thead>
+<<<<<<< HEAD
+            <tbody class="align-center">
+              <tr class="border-b dark:border-gray-700">
+=======
             <tbody>
               <tr
                 class="border-b dark:border-gray-700"
                 v-for="(dosen, index) in filteredDosenList"
                 :key="dosen.id"
               >
+>>>>>>> b33ce1cb5d42514762cd7f288a743a44c1627509
                 <th
                   scope="row"
                   class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -112,6 +117,25 @@
                 </th>
                 <td class="px-4 py-3">
                   <img
+<<<<<<< HEAD
+                    src="../../assets/profilePict.png"
+                    alt=""
+                    width="50"
+                    height="auto"
+                  />
+                </td>
+                <router-link
+                  :to="{ name: 'DetailPageDosen' }"
+                >
+                  <td class="px-4 py-3 align-middle">
+                    Azura Alinea Michelle Zudich
+                  </td>
+                </router-link>
+                <td class="px-4 py-3">0091282678578</td>
+                <td class="px-4 py-3">Wanita</td>
+                <td class="px-4 py-3">S3</td>
+                <td class="px-4 py-3">Tetap</td>
+=======
                     :src="getFotoUrl(dosen.foto)"
                     alt="Dosen Foto"
                     class="w-20 h-20 object-cover"
@@ -132,6 +156,7 @@
                 <td class="px-4 py-3">
                   {{ dosen.jabatan_dosen.status_pekerjaan }}
                 </td>
+>>>>>>> b33ce1cb5d42514762cd7f288a743a44c1627509
               </tr>
             </tbody>
           </table>
@@ -141,6 +166,9 @@
   </section>
 </template>
 
+<<<<<<< HEAD
+<script></script>
+=======
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import axios from "axios";
@@ -192,3 +220,4 @@ const filteredDosenList = computed(() => {
 
 onMounted(fetchData);
 </script>
+>>>>>>> b33ce1cb5d42514762cd7f288a743a44c1627509
