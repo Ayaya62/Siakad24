@@ -64,14 +64,14 @@ import DataMahasiswa from './DataMahasiswa.vue';
         />
       </div>
       <div class="flex justify-between items-center">
-        <label for="nip" class="pr-4 w-40 font-bold text-gray-700"
+        <label for="phone" class="pr-4 w-40 font-bold text-gray-700"
           >Telepon</label
         >
         <input
           required
           placeholder="Telepon"
-          type="text"
-          id="nip"
+          type="tel"
+          id="phone"
           class="w-52 rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
         />
       </div>

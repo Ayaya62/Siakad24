@@ -81,6 +81,7 @@
                 <option value="">6</option>
                 <option value="">7</option>
                 <option value="">8</option>
+                <option value="">Lebih dari 8</option>
               </select>
               <select name="" id="" class="rounded-lg">
                 <option value="" selected disabled>Fakultas</option>
@@ -121,7 +122,12 @@
                   1.
                 </th>
                 <td class="px-4 py-3">
-                  <img src="" alt="" />
+                  <img
+                    src="../../assets/profilePict.png"
+                    alt=""
+                    width="50"
+                    height="auto"
+                  />
                 </td>
                 <router-link :to="{ name: 'DetailPageMahasiswa' }">
                   <td class="px-4 py-3">Azura Alinea Michelle Zudich</td>

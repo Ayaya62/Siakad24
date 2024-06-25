@@ -97,7 +97,7 @@
                 <th scope="col" class="px-4 py-3">Status</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="align-center">
               <tr class="border-b dark:border-gray-700">
                 <th
                   scope="row"
@@ -106,10 +106,19 @@
                   1.
                 </th>
                 <td class="px-4 py-3">
-                  <img src="" alt="" />
+                  <img
+                    src="../../assets/profilePict.png"
+                    alt=""
+                    width="50"
+                    height="auto"
+                  />
                 </td>
-                <router-link :to="{ name: 'DetailPageDosen' }">
-                  <td class="px-4 py-3">Azura Alinea Michelle Zudich</td>
+                <router-link
+                  :to="{ name: 'DetailPageDosen' }"
+                >
+                  <td class="px-4 py-3 align-middle">
+                    Azura Alinea Michelle Zudich
+                  </td>
                 </router-link>
                 <td class="px-4 py-3">0091282678578</td>
                 <td class="px-4 py-3">Wanita</td>
@@ -124,4 +133,4 @@
   </section>
 </template>
 
-<script setup></script>
+<script></script>
