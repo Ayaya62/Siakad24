@@ -30,7 +30,6 @@
       </router-link>
     </div>
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-      <!-- Start coding here -->
       <div
         class="bg-white dark:bg-blue-950 relative shadow-md sm:rounded-lg overflow-hidden"
       >
@@ -38,7 +37,7 @@
           class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"
         >
           <div class="w-full md:w-1/2">
-            <form class="flex items-center">
+            <form class="flex items-center" @submit.prevent="handleSearch">
               <label for="simple-search" class="sr-only">Search</label>
               <div class="relative w-full">
                 <div
@@ -61,6 +60,7 @@
                 <input
                   type="text"
                   id="simple-search"
+                  v-model="searchQuery"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   placeholder="Search"
                 />
@@ -71,23 +71,13 @@
             class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
           >
             <div class="flex items-center space-x-3 w-full md:w-auto">
-              <select name="" id="" class="rounded-lg">
-                <option value="" selected disabled>Semester</option>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
-                <option value="">5</option>
-                <option value="">6</option>
-                <option value="">7</option>
-                <option value="">8</option>
+              <select v-model="selectedSemester" class="rounded-lg">
+                <option value="" disabled>Semester</option>
+                <option v-for="semester in semesters" :key="semester" :value="semester">{{ semester }}</option>
               </select>
-              <select name="" id="" class="rounded-lg">
-                <option value="" selected disabled>Fakultas</option>
-                <option value="">Keguruan dan Ilmu Pendidikan</option>
-                <option value="">Ekonomi dan Psikologi</option>
-                <option value="">Teknologi dan Komputer</option>
-                <option value="">Vokasi</option>
+              <select v-model="selectedFakultas" class="rounded-lg">
+                <option value="" disabled>Fakultas</option>
+                <option v-for="fakultas in fakultasList" :key="fakultas.id" :value="fakultas.nama">{{ fakultas.nama }}</option>
               </select>
             </div>
           </div>
@@ -113,26 +103,28 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="border-b dark:border-gray-700">
+              <tr class="border-b dark:border-gray-700" v-for="(mahasiswa, index) in filteredMahasiswaList" :key="mahasiswa.id">
                 <th
                   scope="row"
                   class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  1.
+                  {{ index + 1 }}.
                 </th>
                 <td class="px-4 py-3">
-                  <img src="" alt="" />
+                  <img :src="getFotoUrl(mahasiswa.foto)" alt="Mahasiswa Foto" class="w-20 h-20 object-cover"/>
                 </td>
-                <router-link :to="{ name: 'DetailPageMahasiswa' }">
-                  <td class="px-4 py-3">Azura Alinea Michelle Zudich</td>
-                </router-link>
-                <td class="px-4 py-3">22/493981/TK/27709</td>
-                <td class="px-4 py-3">4</td>
-                <td class="px-4 py-3">58</td>
-                <td class="px-4 py-3">2022</td>
-                <td class="px-4 py-3">Teknik</td>
-                <td class="px-4 py-3">Arsitektur</td>
-                <td class="px-4 py-3">Aktif</td>
+                <td class="px-4 py-3">
+                  <router-link :to="{ name: 'DetailPageMahasiswa', params: { id: mahasiswa.id } }">
+                    {{ mahasiswa.nama }}
+                  </router-link>
+                </td>
+                <td class="px-4 py-3">{{ mahasiswa.nim }}</td>
+                <td class="px-4 py-3">{{ mahasiswa.semester }}</td>
+                <td class="px-4 py-3">{{ mahasiswa.sks }}</td>
+                <td class="px-4 py-3">{{ mahasiswa.angkatan }}</td>
+                <td class="px-4 py-3">{{ mahasiswa.fakultas.nama }}</td>
+                <td class="px-4 py-3">{{ mahasiswa.prodi.nama }}</td>
+                <td class="px-4 py-3">{{ mahasiswa.status }}</td>
               </tr>
             </tbody>
           </table>
@@ -142,6 +134,69 @@
   </section>
 </template>
 
-<script>
-import { initFlowbite } from "flowbite";
+<script setup>
+import { ref, computed, onMounted } from 'vue';
+import axios from 'axios';
+
+const mahasiswaList = ref([]);
+const fakultasList = ref([]);
+const searchQuery = ref('');
+const selectedSemester = ref('');
+const selectedFakultas = ref('');
+
+const semesters = ['1', '2', '3', '4', '5', '6', '7', '8'];
+
+const fetchData = async () => {
+  try {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) {
+      console.error('No authentication token found');
+      return;
+    }
+
+    // Fetch data mahasiswa
+    const mahasiswaResponse = await axios.get('http://127.0.0.1:8000/api/data-mahasiswa', {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        Accept: 'application/json'
+      }
+    });
+    console.log('mahasiswaResponse:', mahasiswaResponse.data);
+    mahasiswaList.value = mahasiswaResponse.data;
+
+    // Fetch data fakultas
+    const fakultasResponse = await axios.get('http://127.0.0.1:8000/api/fakultas', {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+        Accept: 'application/json'
+      }
+    });
+    console.log('fakultasResponse:', fakultasResponse.data);
+    fakultasList.value = fakultasResponse.data;
+  } catch (error) {
+    console.error('Error fetching data:', error.response ? error.response.data : error.message);
+  }
+};
+
+const handleSearch = () => {
+  fetchData();
+};
+
+const getFotoUrl = (foto) => {
+  const baseUrl = 'http://127.0.0.1:8000/storage/fotos/';
+  return `${baseUrl}${foto}`;
+};
+
+const filteredMahasiswaList = computed(() => {
+  return mahasiswaList.value.filter((mahasiswa) => {
+    console.log('mahasiswa:', mahasiswa); // Log individual mahasiswa data
+    const matchesQuery = mahasiswa.nim.includes(searchQuery.value) || mahasiswa.nama.toLowerCase().includes(searchQuery.value.toLowerCase());
+    const matchesSemester = selectedSemester.value ? mahasiswa.semester === selectedSemester.value : true;
+    const matchesFakultas = selectedFakultas.value ? mahasiswa.fakultas.nama === selectedFakultas.value : true;
+
+    return matchesQuery && matchesSemester && matchesFakultas;
+  });
+});
+
+onMounted(fetchData);
 </script>

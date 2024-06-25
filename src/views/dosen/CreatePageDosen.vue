@@ -1,4 +1,3 @@
-import DataMahasiswa from './DataMahasiswa.vue';
 <template>
   <main class="mx-auto flex flex-col overscroll-y-none">
     <div class="text-sm font-light">Admin > Data Dosen > Tambah Data Dosen</div>
@@ -16,6 +15,7 @@ import DataMahasiswa from './DataMahasiswa.vue';
         <label for="name" class="pr-4 w-40 font-bold text-gray-700">Nama</label>
         <div class="flex-1">
           <input
+            v-model="dosen.nama"
             required
             placeholder="Nama Dosen"
             type="text"
@@ -31,11 +31,13 @@ import DataMahasiswa from './DataMahasiswa.vue';
           type="file"
           accept="image/*"
           class="text-sm text-gray-400 file:mr-2 file:py-1 file:px-1 file:rounded-md file:border-solid file:border file:border-gray-200 file:text-sm file:bg-white hover:file:bg-gray-100"
+          @change="handleFileChange"
         />
       </div>
       <div class="flex justify-between items-center">
         <label for="nidn" class="pr-4 w-40 font-bold text-gray-700">NIDN</label>
         <input
+          v-model="dosen.nidn"
           required
           placeholder="NIDN"
           type="text"
@@ -46,6 +48,7 @@ import DataMahasiswa from './DataMahasiswa.vue';
       <div class="flex justify-between items-center">
         <label for="nip" class="pr-4 w-40 font-bold text-gray-700">NIP</label>
         <input
+          v-model="dosen.nip"
           required
           placeholder="NIP"
           type="text"
@@ -54,46 +57,44 @@ import DataMahasiswa from './DataMahasiswa.vue';
         />
       </div>
       <div class="flex justify-between items-center">
-        <label for="nip" class="pr-4 w-40 font-bold text-gray-700">Email</label>
+        <label for="email" class="pr-4 w-40 font-bold text-gray-700">Email</label>
         <input
+          v-model="dosen.email"
           required
           placeholder="Email"
           type="email"
-          id="nip"
+          id="email"
           class="w-52 rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
         />
       </div>
       <div class="flex justify-between items-center">
-        <label for="nip" class="pr-4 w-40 font-bold text-gray-700"
-          >Telepon</label
-        >
+        <label for="telepon" class="pr-4 w-40 font-bold text-gray-700">Telepon</label>
         <input
+          v-model="dosen.no_telepon"
           required
           placeholder="Telepon"
           type="text"
-          id="nip"
+          id="telepon"
           class="w-52 rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
         />
       </div>
       <div class="flex justify-between items-center">
-        <label for="jenis-kelamin" class="pr-4 w-40 font-bold text-gray-700"
-          >Jenis Kelamin</label
-        >
+        <label for="jenis-kelamin" class="pr-4 w-40 font-bold text-gray-700">Jenis Kelamin</label>
         <select
+          v-model="dosen.jenis_kelamin"
           required
           id="jenis-kelamin"
           class="w-52 rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
         >
           <option selected></option>
-          <option value="Laki">Laki-laki</option>
-          <option value="Perempuan">Perempuan</option>
+          <option value="pria">Laki-laki</option>
+          <option value="wanita">Perempuan</option>
         </select>
       </div>
       <div class="flex justify-between items-center">
-        <label for="alamat" class="pr-4 w-40 font-bold text-gray-700"
-          >Alamat</label
-        >
+        <label for="alamat" class="pr-4 w-40 font-bold text-gray-700">Alamat</label>
         <input
+          v-model="dosen.alamat"
           required
           placeholder="Alamat"
           type="text"
@@ -103,43 +104,37 @@ import DataMahasiswa from './DataMahasiswa.vue';
       </div>
 
       <div class="flex">
-        <label for="jenjang" class="pr-4 w-40 font-bold text-gray-700 align-top"
-          >Jenjang Pendidikan</label
-        >
+        <label for="jenjang" class="pr-4 w-40 font-bold text-gray-700 align-top">Jenjang Pendidikan</label>
         <div class="w-full">
-          <!-- <button
-            class="inline-flex justify-center py-1 px-2 border border-transparent shadow-sm font-bold rounded-md text-white bg-blue-950 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-600"
-          >
-            +
-          </button> -->
           <ul class="w-53">
             <li class="flex gap-2 mb-2">
               <p>S1</p>
               <input
+                v-model="dosen.s1_jurusan"
                 required
                 placeholder=""
                 type="text"
-                id="fungsional"
+                id="s1_jurusan"
                 class="rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
               />
             </li>
             <li class="flex gap-2 my-2">
               <p>S2</p>
               <input
-                required
+                v-model="dosen.s2_jurusan"
                 placeholder=""
                 type="text"
-                id="fungsional"
+                id="s2_jurusan"
                 class="rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
               />
             </li>
             <li class="flex gap-2 my-2">
               <p>S3</p>
               <input
-                required
+                v-model="dosen.s3_jurusan"
                 placeholder=""
                 type="text"
-                id="fungsional"
+                id="s3_jurusan"
                 class="rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
               />
             </li>
@@ -150,10 +145,9 @@ import DataMahasiswa from './DataMahasiswa.vue';
       <div class="text-xl font-bold text-blue-950">Jabatan</div>
       <div class="w-full grid gap-5 px-4 pr-0 p-5">
         <div class="flex justify-between items-center">
-          <label for="fungsional" class="pr-4 w-40 font-bold text-gray-700"
-            >Fungsional</label
-          >
+          <label for="fungsional" class="pr-4 w-40 font-bold text-gray-700">Fungsional</label>
           <input
+            v-model="dosen.fungsional"
             required
             placeholder="Jabatan Fungsional"
             type="text"
@@ -162,10 +156,9 @@ import DataMahasiswa from './DataMahasiswa.vue';
           />
         </div>
         <div class="flex justify-between items-center">
-          <label for="struktural" class="pr-4 w-40 font-bold text-gray-700"
-            >Struktural</label
-          >
+          <label for="struktural" class="pr-4 w-40 font-bold text-gray-700">Struktural</label>
           <input
+            v-model="dosen.struktural"
             required
             placeholder="Jabatan Struktural"
             type="text"
@@ -176,44 +169,41 @@ import DataMahasiswa from './DataMahasiswa.vue';
       </div>
 
       <div class="flex justify-between items-center">
-        <label for="status-pekerjaan" class="pr-4 w-40 font-bold text-gray-700"
-          >Status Pekerjaan</label
-        >
+        <label for="status-pekerjaan" class="pr-4 w-40 font-bold text-gray-700">Status Pekerjaan</label>
         <select
+          v-model="dosen.status_pekerjaan"
           required
-          id="jenis-kelamin"
+          id="status-pekerjaan"
           class="w-52 rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
         >
           <option selected></option>
-          <option value="Laki">Tetap</option>
-          <option value="Perempuan">Tidak Tetap</option>
+          <option value="tetap">Tetap</option>
+          <option value="tidak tetap">Tidak Tetap</option>
         </select>
       </div>
 
       <div class="flex justify-between items-center">
-        <label for="status-keaktifan" class="pr-4 w-40 font-bold text-gray-700"
-          >Status Keaktifan</label
-        >
+        <label for="status-keaktifan" class="pr-4 w-40 font-bold text-gray-700">Status Keaktifan</label>
         <select
+          v-model="dosen.status_keaktifan"
           required
-          id="jenis-kelamin"
+          id="status-keaktifan"
           class="w-52 rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
         >
           <option selected></option>
-          <option value="Laki">Aktif</option>
-          <option value="Perempuan">Tidak Aktif</option>
-          <option value="Perempuan">Tugas Belajar</option>
+          <option value="aktif">Aktif</option>
+          <option value="tidak aktif">Tidak Aktif</option>
+          <option value="tugas belajar">Tugas Belajar</option>
         </select>
       </div>
       <div class="flex justify-between items-center">
-        <label for="struktural" class="pr-4 w-40 font-bold text-gray-700"
-          >Minat Penelitian</label
-        >
+        <label for="minat-penelitian" class="pr-4 w-40 font-bold text-gray-700">Minat Penelitian</label>
         <input
+          v-model="dosen.minat_penelitian"
           required
           placeholder="Minat Penelitian"
           type="text"
-          id="penelitian"
+          id="minat-penelitian"
           class="w-52 rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
         />
       </div>
@@ -241,7 +231,9 @@ import DataMahasiswa from './DataMahasiswa.vue';
     />
   </main>
 </template>
+
 <script>
+import axios from 'axios';
 import Modal from "../../components/ConfirmComponent.vue";
 
 export default {
@@ -250,21 +242,64 @@ export default {
   },
   data() {
     return {
+      dosen: {
+        id_user: 1,
+        nama: '',
+        foto: null,
+        nidn: '',
+        nip: '',
+        email: '',
+        no_telepon: '',
+        jenis_kelamin: '',
+        alamat: '',
+        s1_jurusan: '',
+        s2_jurusan: '',
+        s3_jurusan: '',
+        fungsional: '',
+        struktural: '',
+        status_pekerjaan: '',
+        status_keaktifan: '',
+        minat_penelitian: ''
+      },
       isModalVisible: false,
     };
   },
   methods: {
+    handleFileChange(event) {
+      this.dosen.foto = event.target.files[0];
+    },
     openModal() {
       this.isModalVisible = true;
     },
     closeModal() {
       this.isModalVisible = false;
     },
-    submitForm() {
-      // Handle form submission here
-      this.isModalVisible = false;
-      alert("Aksi berhasil!"); // Replace with actual form submission logic
-      window.history.back();
+    async submitForm() {
+      try {
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken) {
+          console.error('No authentication token found');
+          return;
+        }
+
+        const formData = new FormData();
+        for (const key in this.dosen) {
+          formData.append(key, this.dosen[key]);
+        }
+
+        const response = await axios.post('http://127.0.0.1:8000/api/data-dosen', formData, {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        console.log('Data saved successfully:', response.data);
+        this.isModalVisible = false;
+        this.$router.push({ name: 'DataDosen' });
+      } catch (error) {
+        console.error('Error saving data:', error.response ? error.response.data : error.message);
+      }
     },
   },
 };
