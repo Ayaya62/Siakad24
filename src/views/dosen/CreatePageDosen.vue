@@ -73,13 +73,8 @@
           v-model="dosen.no_telepon"
           required
           placeholder="Telepon"
-<<<<<<< HEAD
           type="tel"
           id="phone"
-=======
-          type="text"
-          id="telepon"
->>>>>>> b33ce1cb5d42514762cd7f288a743a44c1627509
           class="w-52 rounded-md flex-1 appearance-none border border-gray-300 py-2 px-2 bg-white text-gray-700 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-600 focus:border-transparent"
         />
       </div>
