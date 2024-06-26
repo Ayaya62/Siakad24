@@ -67,6 +67,7 @@
         <router-link :to="{ name: 'EditPageMataKuliah', params: { id: mataKuliah.id } }">
           <button
             class="bg-yellow-300 hover:bg-transparent border-2 hover:border-yellow-300 text-blue-950 font-bold py-1 px-10 rounded-lg shadow-lg"
+            id="button-edit-matakuliah"
           >
             Edit
           </button>
@@ -74,6 +75,7 @@
 
         <button
           @click="openModal"
+          id="button-delete-matakuliah"
           type="button"
           class="bg-transparent hover:bg-red-700 text-red-600 hover:text-white py-1 px-4 border-2 border-red-600 hover:border-transparent rounded-lg"
         >

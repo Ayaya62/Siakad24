@@ -48,7 +48,7 @@
           <td>
             <ul>
               <li v-for="(pendidikan, index) in dosen?.pendidikan_dosen" :key="index">
-                {{ pendidikan.sarjana.nama }}
+                {{ pendidikan.sarjana.nama }} - {{ pendidikan.jurusan }}
               </li>
             </ul>
           </td>

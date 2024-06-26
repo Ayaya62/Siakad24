@@ -6,6 +6,7 @@
       <router-link :to="{ name: 'CreatePageMataKuliah' }">
         <button
           type="button"
+          id="button-tambah-matakuliah"
           class="flex items-center justify-center text-white bg-primary-950 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-semibold rounded-lg text-base px-7 py-3"
         >
           Tambah
@@ -30,13 +31,19 @@
       </router-link>
     </div>
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-      <div class="bg-white dark:bg-blue-950 relative shadow-md sm:rounded-lg overflow-hidden">
-        <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+      <div
+        class="bg-white dark:bg-blue-950 relative shadow-md sm:rounded-lg overflow-hidden"
+      >
+        <div
+          class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4"
+        >
           <div class="w-full md:w-1/2">
             <form class="flex items-center">
               <label for="simple-search" class="sr-only">Search</label>
               <div class="relative w-full">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <div
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"
+                >
                   <svg
                     aria-hidden="true"
                     class="w-5 h-5 text-gray-500 dark:text-gray-400"
@@ -62,18 +69,36 @@
               </div>
             </form>
           </div>
-          <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+          <div
+            class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
+          >
             <div class="flex items-center space-x-3 w-full md:w-auto">
-              <select name="" id="" class="rounded-lg" v-model="selectedSemester" @change="filterMataKuliah">
+              <select
+                name=""
+                id=""
+                class="rounded-lg"
+                v-model="selectedSemester"
+                @change="filterMataKuliah"
+              >
                 <option value="" selected disabled>Semester</option>
-                <option v-for="semester in semesters" :key="semester" :value="semester">{{ semester }}</option>
+                <option
+                  v-for="semester in semesters"
+                  :key="semester"
+                  :value="semester"
+                >
+                  {{ semester }}
+                </option>
               </select>
             </div>
           </div>
         </div>
         <div class="overflow-x-auto">
-          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <table
+            class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+            >
               <tr>
                 <th scope="col" class="px-4 py-3">No</th>
                 <th scope="col" class="px-4 py-3">Kode</th>
@@ -86,18 +111,35 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(matkul, index) in filteredMataKuliah" :key="matkul.id" class="border-b dark:border-gray-700">
-                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+              <tr
+                v-for="(matkul, index) in filteredMataKuliah"
+                :key="matkul.id"
+                class="border-b dark:border-gray-700"
+              >
+                <th
+                  scope="row"
+                  class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
                   {{ index + 1 }}
                 </th>
                 <td class="px-4 py-3">{{ matkul.kode }}</td>
-                <router-link :to="{ name: 'DetailPageMataKuliah', params: { id: matkul.id } }">
-                  <td class="px-4 py-3">{{ matkul.nama }}</td>
-                </router-link>
+                <td class="px-4 py-3" id="page-detail-matakuliah">
+                  <router-link
+                    :to="{
+                      name: 'DetailPageMataKuliah',
+                      params: { id: matkul.id },
+                    }"
+                    id="page-detail-matakuliah"
+                  >
+                    {{ matkul.nama }}
+                  </router-link>
+                </td>
                 <td class="px-4 py-3">{{ matkul.sks }}</td>
                 <td class="px-4 py-3">{{ matkul.semester }}</td>
                 <td class="px-4 py-3">{{ matkul.dosen.nama }}</td>
-                <td class="px-4 py-3">{{ matkul.jadwal.hari }}, {{ matkul.jadwal.sesi.waktu }}</td>
+                <td class="px-4 py-3">
+                  {{ matkul.jadwal.hari }}, {{ matkul.jadwal.sesi.waktu }}
+                </td>
                 <td class="px-4 py-3">{{ matkul.jenis }}</td>
               </tr>
             </tbody>
@@ -125,21 +167,30 @@ export default {
     async fetchMataKuliah() {
       const authToken = localStorage.getItem("authToken");
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/data-matkul", {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        });
+        const response = await axios.get(
+          "http://127.0.0.1:8000/api/data-matkul",
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
         this.mataKuliahList = response.data;
         this.filteredMataKuliah = this.mataKuliahList;
       } catch (error) {
-        console.error("Error fetching mata kuliah:", error.response ? error.response.data : error.message);
+        console.error(
+          "Error fetching mata kuliah:",
+          error.response ? error.response.data : error.message
+        );
       }
     },
     filterMataKuliah() {
       this.filteredMataKuliah = this.mataKuliahList.filter((matkul) => {
         return (
-          (!this.searchQuery || matkul.nama.toLowerCase().includes(this.searchQuery.toLowerCase())) &&
+          (!this.searchQuery ||
+            matkul.nama
+              .toLowerCase()
+              .includes(this.searchQuery.toLowerCase())) &&
           (!this.selectedSemester || matkul.semester === this.selectedSemester)
         );
       });

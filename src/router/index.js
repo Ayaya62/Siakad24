@@ -17,8 +17,13 @@ import EditPageMataKuliah from "../views/matakuliah/EditPageMataKuliah.vue";
 
 const routes = [
   {
-    name: "Login",
+    name: "Home",
     path: "/",
+    redirect: { name: "Login" },
+  },
+  {
+    name: "Login",
+    path: "/login",
     component: Login,
   },
   {

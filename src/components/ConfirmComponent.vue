@@ -15,6 +15,7 @@
         </button>
         <button
           @click="confirm"
+          id="confirm-button"
           class="bg-blue-950 text-white py-2 px-4 rounded"
         >
           Ya

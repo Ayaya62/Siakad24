@@ -145,6 +145,7 @@
         </router-link>
         <button
           type="submit"
+          id="submit-datamatkul"
           class="ml-3 inline-flex justify-center py-2 px-2 border border-transparent shadow-sm font-bold rounded-md text-white bg-blue-950 hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-600"
         >
           Simpan

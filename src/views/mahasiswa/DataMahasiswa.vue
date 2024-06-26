@@ -71,23 +71,9 @@
             class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0"
           >
             <div class="flex items-center space-x-3 w-full md:w-auto">
-<<<<<<< HEAD
-              <select name="" id="" class="rounded-lg">
-                <option value="" selected disabled>Semester</option>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
-                <option value="">5</option>
-                <option value="">6</option>
-                <option value="">7</option>
-                <option value="">8</option>
-                <option value="">Lebih dari 8</option>
-=======
               <select v-model="selectedSemester" class="rounded-lg">
                 <option value="" disabled>Semester</option>
                 <option v-for="semester in semesters" :key="semester" :value="semester">{{ semester }}</option>
->>>>>>> b33ce1cb5d42514762cd7f288a743a44c1627509
               </select>
               <select v-model="selectedFakultas" class="rounded-lg">
                 <option value="" disabled>Fakultas</option>
@@ -125,16 +111,7 @@
                   {{ index + 1 }}.
                 </th>
                 <td class="px-4 py-3">
-<<<<<<< HEAD
-                  <img
-                    src="../../assets/profilePict.png"
-                    alt=""
-                    width="50"
-                    height="auto"
-                  />
-=======
                   <img :src="getFotoUrl(mahasiswa.foto)" alt="Mahasiswa Foto" class="w-20 h-20 object-cover"/>
->>>>>>> b33ce1cb5d42514762cd7f288a743a44c1627509
                 </td>
                 <td class="px-4 py-3">
                   <router-link :to="{ name: 'DetailPageMahasiswa', params: { id: mahasiswa.id } }">
